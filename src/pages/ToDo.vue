@@ -77,29 +77,32 @@ export default {
         }
       )
     },
-    saveData: function () {
+    saveData: function (todos) {
       // NOTE: Ideally only save when validated (i.e. no blank text)
 
-      localStorage.setItem('todos', this.todos)
+      localStorage.setItem('todos', JSON.stringify(todos))
 
-      console.log('localStorage(todos): ', localStorage.getItem('todos'))
+      console.log('saveData :: localStorage = ', localStorage)
     },
     loadData: function () {
-      this.todos = [
-        {
-          id: 76375213,
-          note: 'Add New Item',
-          priority: 1,
-          created: '2019-08-08',
-          due: '2019-08-09'
-        },
-        {
-          id: 1625499,
-          note: 'localStorage',
-          priority: 2,
-          created: '2019-08-08',
-          due: '2019-08-09'
-        },
+      this.todos = JSON.parse(localStorage.getItem('todos'))
+    },
+    initData: function () {
+      let todos = [
+        // {
+        //   id: 76375213,
+        //   note: 'Add New Item',
+        //   priority: 1,
+        //   created: '2019-08-08',
+        //   due: '2019-08-09'
+        // },
+        // {
+        //   id: 1625499,
+        //   note: 'localStorage',
+        //   priority: 2,
+        //   created: '2019-08-08',
+        //   due: '2019-08-09'
+        // },
         {
           id: 727623,
           note: 'Check for valid ToDo on save',
@@ -136,6 +139,8 @@ export default {
           due: '2021-08-27'
         }
       ]
+
+      this.saveData(todos)
     }
   },
   data () {
@@ -144,20 +149,18 @@ export default {
       todos: []
     }
   },
+  created: function () {
+    this.initData()
+  },
   mounted: function () {
+    // Code that will run only after the
+    // entire view has been rendered
     this.$nextTick(function () {
-      // Code that will run only after the
-      // entire view has been rendered
       this.loadData()
 
-      console.log('ToDo mounted', this.todos)
+      console.log('mounted :: ToDo todos (after loadData) = ', this.todos)
     })
   }
-  // watch: {
-  //   name(newName) {
-  //     localStorage.name = newName;
-  //   }
-  // }
 }
 </script>
 
