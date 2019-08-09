@@ -9,7 +9,7 @@
 
     <div v-if="listValid">
       <transition-group tag="div" name="slide-fade">
-        <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" />
+        <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" @remove="deleteItem" />
       </transition-group>
     </div>
     <div v-if="!listValid">
@@ -22,7 +22,7 @@
 <script>
 import ToDoItem from '@/components/ToDoItem'
 
-// import _ from 'lodash';
+import _ from 'lodash'
 
 export default {
   name: 'ToDo',
@@ -32,11 +32,26 @@ export default {
   computed: {
     listValid: function () {
       return (Array.isArray(this.todos) && this.todos.length)
+    },
+    currentList: function () {
+      return this.todos
     }
   },
   methods: {
     createToDo: function () {
       // local constructor
+    },
+    // This version uses an ID passed back by the event.
+    // We could also embed the ID with a curried function
+    deleteItem: function (deleteID) {
+      console.log('ToDo: deleteItem :: deleteID = ', deleteID)
+
+      this.todos = _.filter(this.todos, function (todo) {
+        return todo.id !== deleteID
+      })
+
+      // console.log('ToDo: deleteItem :: removed = ', removed)
+      console.log('ToDo: deleteItem :: todos = ', this.todos)
     },
     clearAll: function () {
       console.log('clearAll')
@@ -66,6 +81,8 @@ export default {
       // NOTE: Ideally only save when validated (i.e. no blank text)
 
       localStorage.setItem('todos', this.todos)
+
+      console.log('localStorage(todos): ', localStorage.getItem('todos'))
     },
     loadData: function () {
       this.todos = [
