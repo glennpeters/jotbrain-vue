@@ -1,8 +1,8 @@
 <template>
   <div class="todo-item">
     <!-- <span>{{todo.note}}</span> -->
-    <input class="note" :value="todo.note" type="text" placeholder="Describe your task" v-on:keyup.enter="saveItem" />
-    <input class="priority" :value="todo.priority" type="text" placeholder="Describe your task" v-on:keyup.enter="saveItem" />
+    <input class="note" v-model="todo.note" type="text" placeholder="Describe your task" v-on:keyup.enter="saveItem" />
+    <input class="priority" v-model="todo.priority" type="text" v-on:keyup.enter="saveItem" />
     <button v-on:click="saveItem">OK</button>
     <button class="warning rounded" v-on:click="deleteItem">X</button>
   </div>
@@ -21,6 +21,12 @@ export default {
     saveItem: function () {
       // TODO, Ideally: Add validation.
 
+      if (this.todo.note) {
+        this.$emit('save', this.todo)
+      } else {
+        alert('Make sure you have content in your task')
+      }
+
       console.log('ToDoItem: saveItem')
     }
   },
@@ -28,7 +34,10 @@ export default {
     todo: {
       type: Object
     },
-    removeEvent: {
+    remove: {
+      type: Function
+    },
+    save: {
       type: Function
     }
   },

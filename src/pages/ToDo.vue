@@ -7,9 +7,13 @@
       <button class="warning" v-on:click="clearAll">Clear All</button>
     </div>
 
-    <div v-if="listValid">
+    <div v-if="listValid" class="todoList">
+      <div class="todoHeader">
+        <!-- <div class="task">Task</div>
+        <div class="priority"><span class="down-caret"></span></div> -->
+      </div>
       <transition-group tag="div" name="slide-fade">
-        <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" @remove="deleteItem" />
+        <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" @remove="deleteItem" @save="saveItem" />
       </transition-group>
     </div>
     <div v-if="!listValid">
@@ -58,6 +62,7 @@ export default {
 
       if (confirm('Are you sure you want to clear all items?')) {
         this.todos = []
+        this.saveData(this.todos)
       }
     },
     addToDo: function () {
@@ -76,6 +81,21 @@ export default {
           due: '2019-08-09'
         }
       )
+    },
+    saveItem: function (newItem) {
+      let replaceIndex = _.findIndex(this.todos, function (o) { return o.id === newItem.id })
+
+      console.log('saveItem :: todos = ', this.todos)
+      console.log('saveItem :: replaceIndex = ', replaceIndex)
+      console.log('saveItem :: newItem = ', newItem)
+
+      try {
+        this.todos[replaceIndex] = newItem
+
+        this.saveData(this.todos)
+      } catch (error) {
+        console.log(error)
+      }
     },
     saveData: function (todos) {
       // NOTE: Ideally only save when validated (i.e. no blank text)
@@ -140,7 +160,8 @@ export default {
         }
       ]
 
-      this.saveData(todos)
+      console.log('initData (disabled): ', todos)
+      // this.saveData(todos)
     }
   },
   data () {
@@ -189,6 +210,43 @@ button.rounded {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+}
+
+.todoHeader {
+  margin: 1em 0 0;
+}
+
+.todoHeader .task {
+  width: 30em;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.todoHeader .priority {
+  width: 2em;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.down-caret {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #ffffff transparent transparent transparent;
+  display: inline-block;
+  margin-left: 6px;
+  top: -3px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: all .25s ease-in;
+}
+
+.open-caret {
+  transform: rotate(180deg);
+  transition: all .25s ease-out;
 }
 
 </style>
