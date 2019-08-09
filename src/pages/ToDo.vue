@@ -105,7 +105,9 @@ export default {
       console.log('saveData :: localStorage = ', localStorage)
     },
     loadData: function () {
-      this.todos = JSON.parse(localStorage.getItem('todos'))
+      let todos = JSON.parse(localStorage.getItem('todos')) || []
+
+      this.todos = todos
     },
     initData: function () {
       let todos = [
