@@ -1,9 +1,9 @@
 <template>
   <div class="todo-item">
     <!-- <span>{{todo.note}}</span> -->
-    <input :value="todo.note" type="text" />
-    <button :on="saveItem">OK</button>
-    <button class="warning" :on="deleteItem">X</button>
+    <input :value="todo.note" type="text" placeholder="Describe your task" />
+    <button :click="saveItem">OK</button>
+    <button class="warning rounded" :click="deleteItem">X</button>
   </div>
 </template>
 
@@ -22,27 +22,11 @@ export default {
   props: {
     todo: {
       type: Object
-    },
-    itemID: {
-      type: String,
-      default: ''
-      // required: true
-    },
-    itemText: {
-      type: String,
-      default: 'Unnamed item'
-      // required: true
-    },
-    priority: {
-      type: Number,
-      default: 0
-      // required: true
     }
   },
   data () {
     return {
-      // msg: 'Welcome to Your Vue.js App'
-
+      // Data goes here
     }
   }
 }
@@ -73,14 +57,20 @@ button {
   background-color: #234;
   color: #fff;
   font-size: 0.6rem;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 button.warning {
   background-color: #ac0202;
+}
+
+button.rounded {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
 }
 
 </style>

@@ -3,8 +3,8 @@
     <h1>ToDo List</h1>
 
     <div class="controls">
-      <button :on="addToDo">Add New Item</button>
-      <button class="warning" :on="clearAll">Clear All</button>
+      <button v-on:click="addToDo">Add New Item</button>
+      <button class="warning" v-on:click="clearAll">Clear All</button>
     </div>
 
     <div v-if="listValid">
@@ -48,13 +48,14 @@ export default {
     addToDo: function () {
       let date = new Date()
       let dateString = date.toISOString()
+      let newID = Date.now() // Ideally, we'd be generating a guid properly
 
       console.log('Adding ToDo item')
 
       this.todos.unshift(
         {
-          id: 1625499,
-          note: 'localStorage',
+          id: newID,
+          note: '',
           priority: 2,
           created: dateString,
           due: '2019-08-09'
@@ -162,6 +163,12 @@ button {
 
 button.warning {
   background-color: #ac0202;
+}
+
+button.rounded {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 </style>
