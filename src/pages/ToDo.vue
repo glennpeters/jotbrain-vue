@@ -2,7 +2,10 @@
   <div class="todo-list">
     <h1>ToDo List</h1>
 
-    <button :on="addToDo">Add New Item</button>
+    <div class="controls">
+      <button :on="addToDo">Add New Item</button>
+      <button class="warning" :on="clearAll">Clear All</button>
+    </div>
 
     <div v-if="listValid">
       <transition-group tag="div" name="slide-fade">
@@ -34,6 +37,13 @@ export default {
   methods: {
     createToDo: function () {
       // local constructor
+    },
+    clearAll: function () {
+      console.log('clearAll')
+
+      if (confirm('Are you sure you want to clear all items?')) {
+        this.todos = []
+      }
     },
     addToDo: function () {
       let date = new Date()
@@ -135,5 +145,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.controls {
+  padding: 0.4rem;
+}
+
+button {
+  background: #03376b;
+  color: #ccc;
+  font-size: 0.8rem;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.warning {
+  background-color: #ac0202;
+}
 
 </style>

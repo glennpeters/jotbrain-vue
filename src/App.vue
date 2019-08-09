@@ -19,7 +19,7 @@
       </nav>
       <!-- <aside>Aside</aside> -->
     </div>
-    <footer>Footer</footer>
+    <!-- <footer>Footer</footer> -->
 
   </div>
 </template>

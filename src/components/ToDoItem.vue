@@ -1,6 +1,9 @@
 <template>
   <div class="todo-item">
-    <h3>Frogs</h3>
+    <!-- <span>{{todo.note}}</span> -->
+    <input :value="todo.note" type="text" />
+    <button :on="saveItem">OK</button>
+    <button class="warning" :on="deleteItem">X</button>
   </div>
 </template>
 
@@ -10,6 +13,10 @@ export default {
   methods: {
     deleteItem: function () {
       // vm.$emit('test', 'hi');
+      console.log('deleteItem')
+    },
+    saveItem: function () {
+      console.log('saveItem')
     }
   },
   props: {
@@ -57,4 +64,23 @@ li {
 a {
   color: #42b983;
 }
+
+.todo-item input {
+  width: 30em;
+}
+
+button {
+  background-color: #234;
+  color: #fff;
+  font-size: 0.6rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+button.warning {
+  background-color: #ac0202;
+}
+
 </style>
